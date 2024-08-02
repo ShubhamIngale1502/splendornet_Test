@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+    {% block title %}
+  <title>Document</title>
+  {% endblock %}
+</head>
+<body>
+    {% block content%}
+    <table class="table table-success table-striped">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>MovieTitle</th>
+            <th>Director</th>
+            <th>ReviewContent</th>
+            <th>Rsating</th>
+            <th>Created_At</th>
+            <th>Reviewer_EmailId</th>
+            <th>Satus</th>
+            <th>genres</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        {% for mv in movies %}
+            <tr>
+                <td>{{mv.id}}</td>
+                <td>{{mv.movieTitle}}</td>
+                <td>{{mv.director}}</td>
+                <td>{{mv.reviewContent}}</td>
+                <td>{{mv.rating}}</td>
+                <td>{{mv.created_At}}</td>
+                <td>{{mv.rewiever_emil_Id}}</td>
+                <td>{{mv.status}}</td>
+                <td>{{mv.genres}}</td>
+                <td>
+                    <a href = "{% url 'update' mv.pk %}" class="btn btn-outline-warning">Update</a>
+                    <a href = "{% url 'delete' mv.pk %}" class="btn btn-outline-danger">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+    </tbody>
+</table>
+</body>
+{% endblock %}
