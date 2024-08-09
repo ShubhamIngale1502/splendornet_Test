@@ -7,9 +7,9 @@
     {% block content%}
     <form method = 'post'>
         {%csrf_token%}
-        <h3>do you really want to delete this data of<span style:color-red>'{{movies.id}} {{movies.movieTitle}}'</span></h3>
-        <button type=Submit class="btn btn-outline-dark">YES</button>
-        <a herf = "{% url 'show'  %}" class="btn btn-outline-danger">No</a>
+        <h3 class="mx-auto mt-5 ">do you really want to delete this data of<span style='color:red'>'ID:-{{movies.id}} Title:-{{movies.movieTitle}}'</span></h3>
+        <button type=Submit class="btn btn-outline-dark col-3">YES</button>
+        <a href = "{% url 'show'  %}" class="btn btn-outline-warning col-3">No</a>
     </form>
     {% endblock %}
 </body>

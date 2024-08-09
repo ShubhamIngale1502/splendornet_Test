@@ -1,16 +1,20 @@
 from django import forms
-from .models import Movie_review
+from .models import Movie_review,Genre
 
 movie_detail = [('Published','Published'),('NotPublished','NotPublished')]
     
-content = [('Horror','Horror'),('Comedy','comedy'),('Action','Action'),('Sci-Fi','Sci-Fi'),('Triller','Triller')]
+CONTENT = [('Horror','Horror'),('Comedy','Comedy'),('Action','Action'),('Sci-Fi','Sci-Fi'),('Thriller','Thriller')]
 class Movie_Review_Form(forms.ModelForm):
+    genres = forms.ModelMultipleChoiceField(
+        queryset=Genre.objects.all(),
+        widget=forms.CheckboxSelectMultiple,
+        required = True
+    )
     class Meta:
         model = Movie_review
         fields = '__all__'
-        
         widgets = {
-            'id' :forms.TextInput(attrs={
+            'id' : forms.TextInput(attrs={
                 'class': 'form-control bg-dark text-light',
             }),
             'movieTitle': forms.TextInput(attrs={
@@ -34,14 +38,9 @@ class Movie_Review_Form(forms.ModelForm):
             'status': forms.Select(choices=movie_detail, attrs={
                 'class': 'form-control bg-dark text-light',
             }),
-            'genres': forms.Select(choices=content, attrs={
+            'genres': forms.CheckboxSelectMultiple(attrs={
                 'class': 'form-control bg-dark text-light',
             }),
-
-            
-            
-            
-            
-                
-                                            
         }
+        
+        

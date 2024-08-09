@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect
 from .forms import Movie_Review_Form
-from .models import Movie_review
+from .models import Movie_review,Genre
+from django.db.models import Q
 
 def create(request):
     template_name = 'reviewapp/insert.html'
@@ -15,8 +16,22 @@ def create(request):
 
 def show_details(request):
     template_name = 'reviewapp/show.html'
-    data = Movie_review.objects.all()
-    context = {'movies':data}
+    query = request.GET.get('q')
+    status_filter = request.GET.get('status')
+    genre_filter = request.GET.getlist('genres')
+
+    reviews = Movie_review.objects.all()
+
+    if query:
+        reviews = reviews.filter(Q(movieTitle__icontains=query) | Q(director__icontains=query))
+    
+    if status_filter:
+        reviews = reviews.filter(status=status_filter)
+    
+    if genre_filter:
+        reviews = reviews.filter(genres__id__in=genre_filter).distinct()
+    genres = Genre.objects.all()
+    context = {'reviews':reviews,'genres':genres}   
     return render(request,template_name,context)
 
 def update_details(request,pk):
